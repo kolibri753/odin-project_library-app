@@ -22,63 +22,34 @@
   <body>
     <header class="header">
       <h1 class="header__title">Library</h1>
-      <button class="header__btn">
+      <button class="btn header__btn" id="addNewBook">
         <i class="fa-solid fa-plus"></i>
       </button>
     </header>
+
     <main class="main">
-      
+      <!--#region card  -->
       <div class="card">
         <img class="card-img" src="" alt="image" />
         <h2 class="card-title">Title</h2>
         <p class="card-description">Description</p>
       </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
+      <!--#endregion -->
+      <!-- #region modal -->
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal__top">
+            <h3 class="modal__title">Add New Book</h3>
+            <button class="btn modal__close-btn" id="modalClose">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <!-- <p class="modal__description">Write your comment</p> -->
+        </div>
       </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div><div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
-      </div>
-     
+      <!-- #endregion -->
     </main>
+
     <footer class="footer">
       <a
         class="fa-brands fa-github"

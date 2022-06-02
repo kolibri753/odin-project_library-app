@@ -21,7 +21,7 @@
   </head>
   <body>
     <header class="header">
-      <h1 class="header__title">Library</h1>
+      <h1 class="header__title">My Bookshelf</h1>
       <button class="btn header__btn" id="addNewBook">
         <i class="fa-solid fa-plus"></i>
       </button>
@@ -30,21 +30,40 @@
     <main class="main">
       <!--#region card  -->
       <div class="card">
-        <img class="card-img" src="" alt="image" />
-        <h2 class="card-title">Title</h2>
-        <p class="card-description">Description</p>
+        <img class="card-img" src="" alt="image"/>
+        <h3 class="card-title">Title</h2>
+        <span class="card-author">Author</span>
+        <span class="card-pages">123</span>
+        <span class="card-status">Status</span>
       </div>
       <!--#endregion -->
       <!-- #region modal -->
       <div class="modal-overlay">
         <div class="modal">
-          <div class="modal__top">
+          <div class="modal__header">
             <h3 class="modal__title">Add New Book</h3>
             <button class="btn modal__close-btn" id="modalClose">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
-          <!-- <p class="modal__description">Write your comment</p> -->
+          <div class="modal__body">
+            <form action="#" class="form">
+              <label class="form__label" for="book-img">Add image</label>
+              <input class="form__input" id="book-img" type="file" accept="image/png, image/jpg">
+              <label class="form__label" for="book-title">Title</label>
+              <input class="form__input" id="book-title" type="text">
+              <label class="form__label" for="book-author">Author</label>
+              <input class="form__input" id="book-author" type="text">
+              <label class="form__label" for="book-pages">Pages</label>
+              <input class="form__input" id="book-pages" type="number">
+              <label class="form__label" for="book-status">Have you read it?
+                <input class="form__input" id="book-status" type="checkbox">
+              </label>
+              <button class="btn form__btn" type="submit">
+                <i class="fa-regular fa-thumbs-up"></i>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
       <!-- #endregion -->

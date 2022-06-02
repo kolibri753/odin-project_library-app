@@ -22,20 +22,38 @@
   <body>
     <header class="header">
       <h1 class="header__title">My Bookshelf</h1>
-      <button class="btn header__btn" id="addNewBook">
+      <button class="btn header__btn" id="add-btn">
         <i class="fa-solid fa-plus"></i>
       </button>
     </header>
 
     <main class="main">
       <!--#region card  -->
-      <div class="card">
-        <img class="card-img" src="" alt="image"/>
-        <h3 class="card-title">Title</h2>
-        <span class="card-author">Author</span>
-        <span class="card-pages">123</span>
-        <span class="card-status">Status</span>
+      <div class="card-wrapper">
+        <div class="card">
+          <button class="btn card__delete-btn" id="delete-btn">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <!-- <img class="card-img" src="" alt="image"/> -->
+          <h3 class="card__title">Title</h2>
+          <span class="card__author">Author</span>
+          <span class="card__pages">Pages</span>
+          <span class="card__status">St.</span>
+        </div>
+
+        <div class="card">
+          <button class="btn card__delete-btn" id="delete-btn">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <!-- <img class="card-img" src="" alt="image"/> -->
+          <h3 class="card__title">Title</h2>
+          <span class="card__author">Author</span>
+          <span class="card__pages">Pages</span>
+          <span class="card__status">St.</span>
+        </div>
+        
       </div>
+
       <!--#endregion -->
       <!-- #region modal -->
       <div class="modal-overlay">
@@ -47,15 +65,15 @@
             </button>
           </div>
           <div class="modal__body">
-            <form action="#" class="form">
-              <label class="form__label" for="book-img">Add image</label>
-              <input class="form__input" id="book-img" type="file" accept="image/png, image/jpg">
+            <form class="form" action="#" method="get">
+              <!-- <label class="form__label" for="book-cover">Add image</label>
+              <input class="form__input" id="book-cover" type="file" accept="image/png, image/jpg"> -->
               <label class="form__label" for="book-title">Title</label>
-              <input class="form__input" id="book-title" type="text">
+              <input class="form__input" id="book-title" type="text" maxlength="40" required />
               <label class="form__label" for="book-author">Author</label>
-              <input class="form__input" id="book-author" type="text">
+              <input class="form__input" id="book-author" type="text" maxlength="48" required />
               <label class="form__label" for="book-pages">Pages</label>
-              <input class="form__input" id="book-pages" type="number">
+              <input class="form__input" id="book-pages" type="number" maxlength="6" required>
               <label class="form__label" for="book-status">Have you read it?
                 <input class="form__input" id="book-status" type="checkbox">
               </label>

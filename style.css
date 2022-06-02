@@ -74,22 +74,32 @@ i {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  justify-self: center;
+  background-color: #d0f3ff;
+}
+
+.main .card-wrapper {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  padding: 1rem;
   gap: 1rem;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  background-color: #d0f3ff;
 }
 
-.main .card {
+.main .card-wrapper .card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -98,11 +108,65 @@ i {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 16rem;
-  width: 16rem;
-  border: 1px solid black;
+  width: 13rem;
   -webkit-box-flex: 0;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
+  background: url(images/bg-book.png) no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.main .card-wrapper .card__delete-btn {
+  position: absolute;
+  background-color: inherit;
+  width: 42px;
+  height: 42px;
+  top: 9px;
+  left: 140px;
+  border-radius: 50% 0 0 50%;
+}
+
+.main .card-wrapper .card__delete-btn:hover {
+  background-color: black;
+}
+
+.main .card-wrapper .card__title {
+  position: absolute;
+  top: 70px;
+  left: 22px;
+  width: 160px;
+  word-break: break-word;
+}
+
+.main .card-wrapper .card__author {
+  position: absolute;
+  top: 150px;
+  left: 22px;
+  width: 160px;
+  word-break: break-word;
+}
+
+.main .card-wrapper .card__pages {
+  position: absolute;
+  top: 220px;
+  left: 22px;
+}
+
+.main .card-wrapper .card__status {
+  position: absolute;
+  top: 220px;
+  left: 160px;
+  color: #0088ff;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.main .card-wrapper .card__status:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .main .modal-overlay {
@@ -125,7 +189,7 @@ i {
   overflow: hidden;
   min-width: 300px;
   width: 30%;
-  height: 63%;
+  height: 55%;
   background-color: white;
   border-radius: 5% 0% 5% 5%;
   -webkit-box-shadow: 1rem 1rem 1rem 1rem rgba(96, 121, 138, 0.6);

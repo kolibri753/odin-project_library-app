@@ -131,6 +131,10 @@ i {
   background-color: black;
 }
 
+.main .card-wrapper .card__delete-btn i {
+  z-index: -10;
+}
+
 .main .card-wrapper .card__title {
   position: absolute;
   top: 70px;

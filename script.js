@@ -39,12 +39,12 @@ class Library {
 const library = new Library();
 const book = new Book();
 
+const cardWrapper = document.querySelector(".card-wrapper");
 const modalWindow = document.querySelector(".modal-overlay");
 const card = document.querySelector(".card");
 const btnAddNewBook = document.getElementById("add-btn");
 const btnModalWindowClose = document.getElementById("modalClose");
 const btnConfirmAddingNewBook = document.querySelector(".form__btn");
-const btnDeleteBook = document.querySelectorAll(".card__delete-btn");
 
 function openModalWindow() {
   modalWindow.classList.add("open-modal");
@@ -54,6 +54,7 @@ function closeModalWindow() {
   modalWindow.classList.remove("open-modal");
 }
 
+let id = 0;
 const getBookFromInput = () => {
   // const cover = document.getElementById('book-cover').value
   const title = document.getElementById("book-title").value;
@@ -78,30 +79,22 @@ function addBook() {
     library.addBook(newBook);
     console.log(library.books);
     addBookToCanvas(newBook);
+    id++;
     closeModalWindow();
   } catch (e) {
     alert(e);
   }
 };
 
-function deleteBook() {
-  alert('Delete')
-  // const title = e.target.innerHTML.replaceAll('"', '');
-  // library.deleteBook(title);
-  // console.log(library.books);
-}
-
-
 function addBookToCanvas(book) {
-  let cardWrapper = document.querySelector(".card-wrapper");
   // <img class="card-img" src="${book.cover}" alt="cover of a ${book.title}}"/>
 
   let code = `
   <div class="card">
-    <button class="btn card__delete-btn" id="delete-btn">
+    <button class="btn card__delete-btn" id="delete-btn${id}">
      <i class="fa-solid fa-trash"></i>
     </button>
-    <h3 class="card__title">"${book.title}"</h2>
+    <h3 class="card__title">${book.title}</h2>
     <span class="card__author">${book.author}</span>
     <span class="card__pages">${book.pages}p.</span>
     <span class="card__status">${book.status}</span>
@@ -114,14 +107,18 @@ function addBookToCanvas(book) {
 btnAddNewBook.addEventListener("click", openModalWindow);
 btnModalWindowClose.addEventListener("click", closeModalWindow);
 btnConfirmAddingNewBook.addEventListener("click", addBook);
-// btnDeleteBook.addEventListener("click", deleteBook);
-
-// btnDeleteBook.forEach((elem) => {
-//   elem.addEventListener('click', deleteBook), {capture: true}
-// });
 
 document.addEventListener("click", e => {
-  if (e.target.matches(".card__delete-btn, .fa-trash")) { 
-    deleteBook()
+  let removeEl;
+  if (e.target.matches(".card__delete-btn")) { 
+    removeEl = e.target.parentNode;
+    cardWrapper.removeChild(removeEl);
+  }
+  else if (e.target.matches(".fa-trash")) {
+    removeEl = e.target.parentNode.parentNode;
+    cardWrapper.removeChild(removeEl);
+    title = e.target.parentNode.parentNode.getElementsByTagName("h3")[0].innerHTML;
+    console.log(title)
+    library.deleteBook(title)
   }
 })

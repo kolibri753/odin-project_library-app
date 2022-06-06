@@ -45,6 +45,7 @@ const card = document.querySelector(".card");
 const btnAddNewBook = document.getElementById("add-btn");
 const btnModalWindowClose = document.getElementById("modalClose");
 const btnConfirmAddingNewBook = document.querySelector(".form__btn");
+// const cardStatus = document.querySelector(".card__status");
 
 function openModalWindow() {
   modalWindow.classList.add("open-modal");
@@ -75,7 +76,12 @@ const getBookFromInput = () => {
 function addBook() {
   try {
     const newBook = getBookFromInput();
+    
     if (newBook === undefined) return;
+    if (library.bookExists(newBook)) {
+      alert("This book is already on the shelf");
+      return;
+    }
     library.addBook(newBook);
     console.log(library.books);
     addBookToCanvas(newBook);
@@ -84,6 +90,12 @@ function addBook() {
   } catch (e) {
     alert(e);
   }
+};
+
+function deleteBook(book, bookTitle) {
+  cardWrapper.removeChild(book);
+  console.log(bookTitle)
+  library.deleteBook(bookTitle)
 };
 
 function addBookToCanvas(book) {
@@ -104,21 +116,50 @@ function addBookToCanvas(book) {
   cardWrapper.innerHTML += code;
 }
 
+const updateBooksGrid = () => {
+  resetBooksGrid()
+  for (let book of library.books) {
+    addBookToCanvas(book)
+    console.log(book.title + " is added");
+  }
+}
+
+const resetBooksGrid = () => {
+  cardWrapper.innerHTML = ''
+  console.log("Shelf cleared");
+}
+
 btnAddNewBook.addEventListener("click", openModalWindow);
 btnModalWindowClose.addEventListener("click", closeModalWindow);
 btnConfirmAddingNewBook.addEventListener("click", addBook);
+// cardStatus.addEventListener("click", toggleRead);
 
 document.addEventListener("click", e => {
   let removeEl;
   if (e.target.matches(".card__delete-btn")) { 
     removeEl = e.target.parentNode;
-    cardWrapper.removeChild(removeEl);
+    title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;
+    deleteBook(removeEl, title)
   }
   else if (e.target.matches(".fa-trash")) {
     removeEl = e.target.parentNode.parentNode;
-    cardWrapper.removeChild(removeEl);
     title = e.target.parentNode.parentNode.getElementsByTagName("h3")[0].innerHTML;
-    console.log(title)
-    library.deleteBook(title)
+    deleteBook(removeEl, title)
+  }
+
+  else if(e.target.matches(".card__status")) {
+    title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;
+    // const title = e.target.parentNode.innerHTML.replaceAll(
+    //   '"',
+    //   ''
+    // )
+    // let status = e.target.parentNode.getElementsByTagName("span")[2].innerHTML;
+
+    // status === "Yes" ? (e.target.parentNode.getElementsByTagName("span")[2].innerHTML.replaceAll("No")) : (status = "No");
+    // const book = library.getBook(title)
+    const curBook = library.getBook(title);
+    curBook.status === "Yes" ? (curBook.status = "No") : (curBook.status = "Yes");
+    updateBooksGrid();
+    console.log(library.books);
   }
 })

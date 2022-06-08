@@ -20,9 +20,7 @@ function closeModalWindow() {
   modalWindow.classList.remove("open-modal");
 }
 
-let id = 0;
 const getBookFromInput = () => {
-  // const cover = document.getElementById('book-cover').value
   const title = document.getElementById("book-title").value;
   const author = document.getElementById("book-author").value;
   const pages = document.getElementById("book-pages").value;
@@ -33,7 +31,7 @@ const getBookFromInput = () => {
     return;
   }
 
-  status === true ? (status = "Yes") : (status = "No");
+  // status === true ? (status = "Yes") : (status = "No");
 
   return new Book(title, author, pages, status);
 };
@@ -41,16 +39,15 @@ const getBookFromInput = () => {
 function addBook() {
   try {
     const newBook = getBookFromInput();
-    
-    if (newBook === undefined) return;
+    if (newBook === undefined) 
+      return;
     if (library.bookExists(newBook)) {
-      alert("This book is already on the shelf");
+      alert("This book is already on the shelf!");
       return;
     }
     library.addBook(newBook);
     console.log(library.books);
     addBookToCanvas(newBook);
-    id++;
     closeModalWindow();
   } catch (e) {
     alert(e);
@@ -63,18 +60,18 @@ function deleteBook(book, bookTitle) {
   library.deleteBook(bookTitle)
 };
 
-function addBookToCanvas(book) {
-  // <img class="card-img" src="${book.cover}" alt="cover of a ${book.title}}"/>
+function addBookToCanvas(newBook) {
+  // newBook.status === true ? (newBook.status = "Yes") : (newBook.status = "No");
 
   let code = `
   <div class="card">
-    <button class="btn card__delete-btn" id="delete-btn${id}">
+    <button class="btn card__delete-btn" id="delete-btn">
      <i class="fa-solid fa-trash"></i>
     </button>
-    <h3 class="card__title">${book.title}</h2>
-    <span class="card__author">${book.author}</span>
-    <span class="card__pages">${book.pages}p.</span>
-    <span class="card__status">${book.status}</span>
+    <h3 class="card__title">${newBook.title}</h2>
+    <span class="card__author">${newBook.author}</span>
+    <span class="card__pages">${newBook.pages}p.</span>
+    <span class="card__status">${newBook.status === true ? ("Yes") : ("No")}</span>
   </div>
   `;
 
@@ -97,7 +94,6 @@ const resetBooksGrid = () => {
 btnAddNewBook.addEventListener("click", openModalWindow);
 btnModalWindowClose.addEventListener("click", closeModalWindow);
 btnConfirmAddingNewBook.addEventListener("click", addBook);
-// cardStatus.addEventListener("click", toggleRead);
 
 document.addEventListener("click", e => {
   let removeEl;
@@ -123,8 +119,8 @@ document.addEventListener("click", e => {
 
     // status === "Yes" ? (e.target.parentNode.getElementsByTagName("span")[2].innerHTML.replaceAll("No")) : (status = "No");
     // const book = library.getBook(title)
-    const curBook = library.getBook(title);
-    curBook.status === "Yes" ? (curBook.status = "No") : (curBook.status = "Yes");
+    const currBook = library.getBook(title);
+    currBook.status = !currBook.status;
     updateBooksGrid();
     console.log(library.books);
   }

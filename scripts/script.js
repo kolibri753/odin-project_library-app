@@ -1,40 +1,5 @@
-class Book {
-  constructor(
-    // cover = null,
-    title = "Unknown",
-    author = "Unknown",
-    pages = 0,
-    status = false
-  ) {
-    // this.cover = cover;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.status = status;
-  }
-}
-
-class Library {
-  constructor() {
-    this.books = [];
-  }
-
-  bookExists(newBook) {
-    return this.books.some((book) => book.title === newBook.title);
-  }
-
-  addBook(newBook) {
-    this.books.push(newBook);
-  }
-
-  deleteBook(title) {
-    this.books = this.books.filter((book) => book.title !== title);
-  }
-
-  getBook(title) {
-    return this.books.find((book) => book.title === title);
-  }
-}
+import Library from '/scripts/Library.js';
+import Book from '/scripts/Book.js';
 
 const library = new Library();
 const book = new Book();
@@ -136,6 +101,7 @@ btnConfirmAddingNewBook.addEventListener("click", addBook);
 
 document.addEventListener("click", e => {
   let removeEl;
+  let title;
   if (e.target.matches(".card__delete-btn")) { 
     removeEl = e.target.parentNode;
     title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;

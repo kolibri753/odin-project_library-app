@@ -12,6 +12,25 @@ const btnModalWindowClose = document.getElementById("modalClose");
 const btnConfirmAddingNewBook = document.querySelector(".form__btn");
 // const cardStatus = document.querySelector(".card__status");
 
+function saveInLocal() {
+  localStorage.setItem('library', JSON.stringify(library.books));
+}
+
+function loadFromLocal() {
+  const books = JSON.parse(localStorage.getItem('library'));
+  if (books) {
+    library.books = books.map((book) => JSONToBook(book));
+    updateBooksGrid();
+  } else {
+    library.books = [];
+  }
+  console.log(library.books);
+}
+
+function JSONToBook(book) {
+  return new Book(book.title, book.author, book.pages, book.status);
+}
+
 function openModalWindow() {
   modalWindow.classList.add("open-modal");
 }
@@ -31,8 +50,6 @@ const getBookFromInput = () => {
     return;
   }
 
-  // status === true ? (status = "Yes") : (status = "No");
-
   return new Book(title, author, pages, status);
 };
 
@@ -46,6 +63,7 @@ function addBook() {
       return;
     }
     library.addBook(newBook);
+    saveInLocal();
     console.log(library.books);
     addBookToCanvas(newBook);
     closeModalWindow();
@@ -56,12 +74,11 @@ function addBook() {
 
 function deleteBook(book, bookTitle) {
   cardWrapper.removeChild(book);
-  console.log(bookTitle)
-  library.deleteBook(bookTitle)
+  library.deleteBook(bookTitle);
+  saveInLocal();
 };
 
 function addBookToCanvas(newBook) {
-  // newBook.status === true ? (newBook.status = "Yes") : (newBook.status = "No");
 
   let code = `
   <div class="card">
@@ -78,7 +95,7 @@ function addBookToCanvas(newBook) {
   cardWrapper.innerHTML += code;
 }
 
-const updateBooksGrid = () => {
+function updateBooksGrid() {
   resetBooksGrid()
   for (let book of library.books) {
     addBookToCanvas(book)
@@ -86,14 +103,16 @@ const updateBooksGrid = () => {
   }
 }
 
-const resetBooksGrid = () => {
+function resetBooksGrid() {
   cardWrapper.innerHTML = ''
-  console.log("Shelf cleared");
+  console.log("Shelf is cleared");
 }
 
 btnAddNewBook.addEventListener("click", openModalWindow);
 btnModalWindowClose.addEventListener("click", closeModalWindow);
 btnConfirmAddingNewBook.addEventListener("click", addBook);
+
+document.addEventListener("DOMContentLoaded", loadFromLocal);
 
 document.addEventListener("click", e => {
   let removeEl;
@@ -111,16 +130,9 @@ document.addEventListener("click", e => {
 
   else if(e.target.matches(".card__status")) {
     title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;
-    // const title = e.target.parentNode.innerHTML.replaceAll(
-    //   '"',
-    //   ''
-    // )
-    // let status = e.target.parentNode.getElementsByTagName("span")[2].innerHTML;
-
-    // status === "Yes" ? (e.target.parentNode.getElementsByTagName("span")[2].innerHTML.replaceAll("No")) : (status = "No");
-    // const book = library.getBook(title)
     const currBook = library.getBook(title);
     currBook.status = !currBook.status;
+    saveInLocal();
     updateBooksGrid();
     console.log(library.books);
   }

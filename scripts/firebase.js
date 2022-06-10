@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
 import {
   getAuth,
@@ -8,6 +7,15 @@ import {
   signInWithPopup,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  // get,
+  // child,
+  // update,
+  // remove,
+} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCR_6ktywkNnqi77wvd85D7u4nkt2gRpTI",
@@ -21,35 +29,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider(app);
+const db = getDatabase();
 
 const btnSignIn = document.getElementById("sign-in-btn");
 const btnSignOut = document.getElementById("sign-out-btn");
-// const username = document.querySelector("btn-text");
 const username = document.querySelector("#sign-out-text");
 
 btnSignIn.addEventListener("click", async (e) => {
   await signInWithPopup(auth, provider)
     .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
       const user = result.user;
-      // ...
+      console.log(user);
       btnSignIn.style.display = "none";
       btnSignOut.style.display = "block";
-      username.innerHTML = user.displayName;
+      const name = user.email;
+      username.innerHTML = name.replace("@gmail.com", "");
     })
     .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-      alert(errorMessage);
+      console.log(errorMessage);
     });
 });
 
@@ -58,10 +56,22 @@ btnSignOut.addEventListener("click", async (e) => {
     .then(() => {
       btnSignIn.style.display = "block";
       btnSignOut.style.display = "none";
-      // username.innerHTML = user.displayName;
+      username.textContent = "Sign Out";
     })
     .catch((error) => {
       const errorMessage = error.message;
-      alert(errorMessage);
+      console.log(errorMessage);
     });
 });
+
+function insertAllDataDB(name, data) {
+  set(ref(db, `Users/${name}`), data);
+  // .then(()=> {
+  //   alert('success');
+  // })
+  // .catch((error) => {
+  //   alert(error)
+  // })
+}
+
+export { insertAllDataDB };

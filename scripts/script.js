@@ -1,5 +1,6 @@
-import Library from '/scripts/Library.js';
-import Book from '/scripts/Book.js';
+import Library from "/scripts/Library.js";
+import Book from "/scripts/Book.js";
+import { insertAllDataDB } from "/scripts/firebase.js";
 
 const library = new Library();
 const book = new Book();
@@ -13,11 +14,13 @@ const btnConfirmAddingNewBook = document.querySelector(".form__btn");
 // const cardStatus = document.querySelector(".card__status");
 
 function saveInLocal() {
-  localStorage.setItem('library', JSON.stringify(library.books));
+  const username = document.querySelector("#sign-out-text").textContent;
+  localStorage.setItem("library", JSON.stringify(library.books));
+  if (username !== "Sign Out") insertAllDataDB(username, library.books);
 }
 
 function loadFromLocal() {
-  const books = JSON.parse(localStorage.getItem('library'));
+  const books = JSON.parse(localStorage.getItem("library"));
   if (books) {
     library.books = books.map((book) => JSONToBook(book));
     updateBooksGrid();
@@ -56,30 +59,27 @@ const getBookFromInput = () => {
 function addBook() {
   try {
     const newBook = getBookFromInput();
-    if (newBook === undefined) 
-      return;
+    if (newBook === undefined) return;
     if (library.bookExists(newBook)) {
       alert("This book is already on the shelf!");
       return;
     }
     library.addBook(newBook);
     saveInLocal();
-    console.log(library.books);
     addBookToCanvas(newBook);
     closeModalWindow();
   } catch (e) {
     alert(e);
   }
-};
+}
 
 function deleteBook(book, bookTitle) {
   cardWrapper.removeChild(book);
   library.deleteBook(bookTitle);
   saveInLocal();
-};
+}
 
 function addBookToCanvas(newBook) {
-
   let code = `
   <div class="card">
     <button class="btn card__delete-btn" id="delete-btn">
@@ -88,7 +88,7 @@ function addBookToCanvas(newBook) {
     <h3 class="card__title">${newBook.title}</h2>
     <span class="card__author">${newBook.author}</span>
     <span class="card__pages">${newBook.pages}p.</span>
-    <span class="card__status">${newBook.status === true ? ("Yes") : ("No")}</span>
+    <span class="card__status">${newBook.status === true ? "Yes" : "No"}</span>
   </div>
   `;
 
@@ -96,15 +96,15 @@ function addBookToCanvas(newBook) {
 }
 
 function updateBooksGrid() {
-  resetBooksGrid()
+  resetBooksGrid();
   for (let book of library.books) {
-    addBookToCanvas(book)
+    addBookToCanvas(book);
     console.log(book.title + " is added");
   }
 }
 
 function resetBooksGrid() {
-  cardWrapper.innerHTML = ''
+  cardWrapper.innerHTML = "";
   console.log("Shelf is cleared");
 }
 
@@ -114,21 +114,19 @@ btnConfirmAddingNewBook.addEventListener("click", addBook);
 
 document.addEventListener("DOMContentLoaded", loadFromLocal);
 
-document.addEventListener("click", e => {
+document.addEventListener("click", (e) => {
   let removeEl;
   let title;
-  if (e.target.matches(".card__delete-btn")) { 
+  if (e.target.matches(".card__delete-btn")) {
     removeEl = e.target.parentNode;
     title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;
-    deleteBook(removeEl, title)
-  }
-  else if (e.target.matches(".fa-trash")) {
+    deleteBook(removeEl, title);
+  } else if (e.target.matches(".fa-trash")) {
     removeEl = e.target.parentNode.parentNode;
-    title = e.target.parentNode.parentNode.getElementsByTagName("h3")[0].innerHTML;
-    deleteBook(removeEl, title)
-  }
-
-  else if(e.target.matches(".card__status")) {
+    title =
+      e.target.parentNode.parentNode.getElementsByTagName("h3")[0].innerHTML;
+    deleteBook(removeEl, title);
+  } else if (e.target.matches(".card__status")) {
     title = e.target.parentNode.getElementsByTagName("h3")[0].innerHTML;
     const currBook = library.getBook(title);
     currBook.status = !currBook.status;
@@ -136,4 +134,4 @@ document.addEventListener("click", e => {
     updateBooksGrid();
     console.log(library.books);
   }
-})
+});

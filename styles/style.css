@@ -293,20 +293,20 @@ i {
   transform: scale(1.5);
 }
 
-.footer__auth .sing-btn {
+.footer__auth .sign-btn {
   padding: 5px;
   border-radius: 15px;
   line-height: 0;
 }
 
-.footer__auth .sing-btn .btn-text {
+.footer__auth .sign-btn .btn-text {
   font-size: 1.5rem;
   margin-left: 5px;
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
 
-.footer__auth .sing-btn:hover .btn-text {
+.footer__auth .sign-btn:hover .btn-text {
   color: white;
 }
 

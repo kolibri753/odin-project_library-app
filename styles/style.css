@@ -30,6 +30,8 @@ a:visited {
 
 i {
   font-size: 2em;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .btn {
@@ -164,13 +166,18 @@ i {
   color: #0088ff;
   font-weight: bold;
   cursor: pointer;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -webkit-transition: -webkit-transition 0.3s;
+  transition: -webkit-transition 0.3s;
+  transition: transition 0.3s;
+  transition: transition 0.3s, -webkit-transition 0.3s;
+  -webkit-transition: color 0.8s;
+  transition: color 0.8s;
 }
 
 .main .card-wrapper .card__status:hover {
   -webkit-transform: scale(1.2);
-          transform: scale(1.2);
+  transform: scale(1.2);
+  color: black;
 }
 
 .main .modal-overlay {
@@ -261,10 +268,10 @@ i {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  min-height: 5em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-height: 3em;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -272,17 +279,38 @@ i {
   background-color: #4ed3ff;
 }
 
-.footer a + a {
+.footer__links a + a {
   margin-left: 2rem;
 }
 
-.footer a {
+.footer__links a {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 
-.footer a:hover {
+.footer__links a:hover {
   -webkit-transform: scale(1.5);
   transform: scale(1.5);
+}
+
+.footer__auth .sing-btn {
+  padding: 5px;
+  border-radius: 15px;
+  line-height: 0;
+}
+
+.footer__auth .sing-btn .btn-text {
+  font-size: 1.5rem;
+  margin-left: 5px;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+
+.footer__auth .sing-btn:hover .btn-text {
+  color: white;
+}
+
+.footer__auth #sign-out-btn {
+  display: none;
 }
 /*# sourceMappingURL=style.css.map */

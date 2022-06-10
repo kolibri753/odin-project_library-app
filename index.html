@@ -18,6 +18,7 @@
       crossorigin="anonymous"
     ></script>
     <script type="module" src="scripts/script.js" defer></script>
+    <script type="module" src="scripts/firebase.js"></script>
   </head>
   <body>
     <header class="header">
@@ -55,13 +56,32 @@
               <!-- <label class="form__label" for="book-cover">Add image</label>
               <input class="form__input" id="book-cover" type="file" accept="image/png, image/jpg"> -->
               <label class="form__label" for="book-title">Title</label>
-              <input class="form__input" id="book-title" type="text" maxlength="40" required />
+              <input
+                class="form__input"
+                id="book-title"
+                type="text"
+                maxlength="40"
+                required
+              />
               <label class="form__label" for="book-author">Author</label>
-              <input class="form__input" id="book-author" type="text" maxlength="48" required />
+              <input
+                class="form__input"
+                id="book-author"
+                type="text"
+                maxlength="48"
+                required
+              />
               <label class="form__label" for="book-pages">Pages</label>
-              <input class="form__input" id="book-pages" type="number" maxlength="6" required>
-              <label class="form__label" for="book-status">Have you read it?
-                <input class="form__input" id="book-status" type="checkbox">
+              <input
+                class="form__input"
+                id="book-pages"
+                type="number"
+                maxlength="6"
+                required
+              />
+              <label class="form__label" for="book-status"
+                >Have you read it?
+                <input class="form__input" id="book-status" type="checkbox" />
               </label>
               <button class="btn form__btn" type="submit">
                 <i class="fa-regular fa-thumbs-up"></i>
@@ -74,21 +94,33 @@
     </main>
 
     <footer class="footer">
-      <a
-        class="fa-brands fa-github"
-        href="https://github.com/kolibri753"
-        target="_blank"
-      ></a>
-      <a
-        class="fa-brands fa-twitter"
-        href="https://twitter.com/kolibri753"
-        target="_blank"
-      ></a>
-      <a
-        class="fa-brands fa-instagram"
-        href="https://www.instagram.com/vera_vah/"
-        target="_blank"
-      ></a>
+      <div class="footer__links">
+        <a
+          class="fa-brands fa-github"
+          href="https://github.com/kolibri753"
+          target="_blank"
+        ></a>
+        <a
+          class="fa-brands fa-twitter"
+          href="https://twitter.com/kolibri753"
+          target="_blank"
+        ></a>
+        <a
+          class="fa-brands fa-instagram"
+          href="https://www.instagram.com/vera_vah/"
+          target="_blank"
+        ></a>
+      </div>
+      <div class="footer__auth">
+        <button class="btn sing-btn" id="sign-in-btn">
+          <i class="fa-brands fa-google"></i>
+          <span class="btn-text">Sign In</span>
+        </button>
+        <button class="btn sing-btn" id="sign-out-btn">
+          <i class="fa-brands fa-google"></i>
+          <span class="btn-text" id="sign-out-text">Sign Out</span>
+        </button>
+      </div>
     </footer>
   </body>
 </html>

@@ -135,3 +135,5 @@ document.addEventListener("click", (e) => {
     console.log(library.books);
   }
 });
+
+export { library, JSONToBook, updateBooksGrid };

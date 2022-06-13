@@ -11,11 +11,14 @@ import {
   getDatabase,
   ref,
   set,
-  // get,
-  // child,
+  get,
+  child,
   // update,
   // remove,
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+import { library } from "/scripts/script.js";
+import { JSONToBook } from "/scripts/script.js";
+import { updateBooksGrid } from "/scripts/script.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCR_6ktywkNnqi77wvd85D7u4nkt2gRpTI",
@@ -44,6 +47,7 @@ btnSignIn.addEventListener("click", async (e) => {
       btnSignOut.style.display = "block";
       const name = user.email;
       username.innerHTML = name.replace("@gmail.com", "");
+      selectDataDB(name.replace("@gmail.com", ""));
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -65,13 +69,31 @@ btnSignOut.addEventListener("click", async (e) => {
 });
 
 function insertAllDataDB(name, data) {
-  set(ref(db, `Users/${name}`), data);
+  set(ref(db, `Users/${name}`), data)
   // .then(()=> {
   //   alert('success');
   // })
-  // .catch((error) => {
-  //   alert(error)
-  // })
+  .catch((error) => {
+    alert(error)
+  })
+}
+
+function selectDataDB(name) {
+  const dbref = ref(db);
+
+  get(child(dbref, `Users/${name}`)).then((snapshot) => {
+    if(snapshot.exists()) {
+      const books = snapshot.val();
+      library.books = books.map((book) => JSONToBook(book));
+      updateBooksGrid();
+    }
+    else {
+      alert("You have zero books yet!\nP.S. If you want to add new just click 'plus' on the top right corner");
+    }
+  })
+  .catch((error) => {
+    alert(error);
+  });
 }
 
 export { insertAllDataDB };

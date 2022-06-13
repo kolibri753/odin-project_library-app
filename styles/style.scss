@@ -261,3 +261,21 @@ i {
     }
   }
 }
+
+@media screen and (max-width: 600px)  {
+  .header {
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  .footer {
+    padding: 2rem;
+  
+    &__links {
+      a + a {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

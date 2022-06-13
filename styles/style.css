@@ -313,4 +313,16 @@ i {
 .footer__auth #sign-out-btn {
   display: none;
 }
+
+@media screen and (max-width: 600px) {
+  .header__title {
+    font-size: 2rem;
+  }
+  .footer {
+    padding: 2rem;
+  }
+  .footer__links a + a {
+    margin-left: 1rem;
+  }
+}
 /*# sourceMappingURL=style.css.map */

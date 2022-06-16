@@ -49,7 +49,7 @@ auth.onAuthStateChanged((user) => {
   else {
     // btnSignIn.style.display = "block";
     // btnSignOut.style.display = "none";
-    username.innerHTML = "Sign In";
+    username.innerHTML = "Sign Out";
   }
 });
 

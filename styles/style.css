@@ -200,7 +200,7 @@ i {
   overflow: hidden;
   min-width: 300px;
   width: 30%;
-  height: 55%;
+  height: 400px;
   background-color: white;
   border-radius: 5% 0% 5% 5%;
   -webkit-box-shadow: 1rem 1rem 1rem 1rem rgba(96, 121, 138, 0.6);
@@ -323,6 +323,12 @@ i {
   }
   .footer__links a + a {
     margin-left: 1rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .footer__links {
+    display: none;
   }
 }
 /*# sourceMappingURL=style.css.map */

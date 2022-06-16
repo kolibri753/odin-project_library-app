@@ -161,7 +161,7 @@ i {
       overflow: hidden;
       min-width: 300px;
       width: 30%;
-      height: 55%;
+      height: 400px; //55%
       background-color: rgb(255, 255, 255);
       border-radius: 5% 0% 5% 5%;
       box-shadow: 1rem 1rem 1rem 1rem rgba(96, 121, 138, 0.6);
@@ -276,6 +276,24 @@ i {
       a + a {
         margin-left: 1rem;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 400px)  {
+
+  .footer {
+    // &__auth {
+    //   .sign-btn {
+  
+    //     .btn-text {
+    //       display: none;
+    //     }
+    //   }
+    // }
+
+    &__links {
+      display: none;
     }
   }
 }

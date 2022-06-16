@@ -2,8 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase
 import {
   getAuth,
   GoogleAuthProvider,
-  // signInWithRedirect,
-  // getRedirectResult,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithPopup,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
@@ -38,17 +38,50 @@ const btnSignIn = document.getElementById("sign-in-btn");
 const btnSignOut = document.getElementById("sign-out-btn");
 const username = document.querySelector("#sign-out-text");
 
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    btnSignIn.style.display = "none";
+    btnSignOut.style.display = "block";
+    const name = user.email;
+    username.innerHTML = name.replace("@gmail.com", "");
+    selectDataDB(name.replace("@gmail.com", ""));
+  }
+  else {
+    // btnSignIn.style.display = "block";
+    // btnSignOut.style.display = "none";
+    username.innerHTML = "Sign In";
+  }
+});
+
 btnSignIn.addEventListener("click", async (e) => {
   await signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
-      btnSignIn.style.display = "none";
-      btnSignOut.style.display = "block";
-      const name = user.email;
-      username.innerHTML = name.replace("@gmail.com", "");
-      selectDataDB(name.replace("@gmail.com", ""));
-    })
+    // .then((result) => {
+    //   const user = result.user;
+    //   // btnSignIn.style.display = "none";
+    //   // btnSignOut.style.display = "block";
+    //   // const name = user.email;
+    //   // username.innerHTML = name.replace("@gmail.com", "");
+    //   // selectDataDB(name.replace("@gmail.com", ""));
+    // })
+    .catch((error) => {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    });
+});
+
+btnSignIn.addEventListener("touchstart", (e) => {
+  signInWithRedirect(auth, provider);
+
+  getRedirectResult(auth)
+    // .then((result) => {
+    //   const user = result.user;
+    //   // console.log(user);
+    //   // btnSignIn.style.display = "none";
+    //   // btnSignOut.style.display = "block";
+    //   // const name = user.email;
+    //   // username.innerHTML = name.replace("@gmail.com", "");
+    //   // selectDataDB(name.replace("@gmail.com", ""));
+    // })
     .catch((error) => {
       const errorMessage = error.message;
       console.log(errorMessage);
@@ -70,30 +103,32 @@ btnSignOut.addEventListener("click", async (e) => {
 
 function insertAllDataDB(name, data) {
   set(ref(db, `Users/${name}`), data)
-  // .then(()=> {
-  //   alert('success');
-  // })
-  .catch((error) => {
-    alert(error)
-  })
+    // .then(()=> {
+    //   alert('success');
+    // })
+    .catch((error) => {
+      alert(error);
+    });
 }
 
 function selectDataDB(name) {
   const dbref = ref(db);
 
-  get(child(dbref, `Users/${name}`)).then((snapshot) => {
-    if(snapshot.exists()) {
-      const books = snapshot.val();
-      library.books = books.map((book) => JSONToBook(book));
-      updateBooksGrid();
-    }
-    else {
-      alert("You have zero books yet!\nP.S. If you want to add new just click 'plus' on the top right corner");
-    }
-  })
-  .catch((error) => {
-    alert(error);
-  });
+  get(child(dbref, `Users/${name}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const books = snapshot.val();
+        library.books = books.map((book) => JSONToBook(book));
+        updateBooksGrid();
+      } else {
+        alert(
+          "You have zero books yet!\nP.S. If you want to add new just click 'plus' on the top right corner"
+        );
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
 }
 
 export { insertAllDataDB };
